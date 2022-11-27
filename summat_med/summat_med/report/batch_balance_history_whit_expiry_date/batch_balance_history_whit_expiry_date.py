@@ -106,7 +106,7 @@ def get_item_warehouse_batch_map(filters, float_precision):
 
 def get_item_details(filters):
 	item_map = {}
-	for d in frappe.db.sql("select tabItem.name, tabItem.item_name, tabItem.description, tabItem.stock_uom, tabBatch.expiry_date from tabItem join tabBatch on tabBatch.item = tabItem.item_name", as_dict=1):
+	for d in frappe.db.sql("select tabItem.name, tabItem.item_name, tabItem.description, tabItem.stock_uom, tabBatch.expiry_date from tabItem join tabBatch on tabBatch.item = tabItem.name", as_dict=1):
 		item_map.setdefault(d.name, d)
 
 	return item_map
