@@ -1,0 +1,63 @@
+<style>
+    .print-format table, .print-format tr,
+    .print-format td, .print-format div, .print-format p {
+        font-family: Monospace;
+        line-height: 200%;
+        vertical-align: middle;
+        direction: rtl;
+    }
+
+    @media screen { 
+        .print-format {
+            max-width: 13in;
+            padding: 0.25in;
+            min-height: 8.5in;
+            direction: rtl;
+        }
+    }
+</style>
+
+{%
+	var report_columns = report.get_columns_for_print();
+	report_columns = columns || report_columns.filter(col => !col.hidden);
+
+%}
+
+<h2 class="text-center">{%= __(report.report_name) %} </h2>
+<p class="text-left text-muted">
+	Printed On {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}
+</p>
+
+<hr>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            {% for(var i=1, l=report.columns.length; i<l; i++) { %}
+                 <th class="text-right">{%= report.columns[i].label %}</th>
+            {% } %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for(let j=0, k=data.length; j<k; j++) { %}
+                {%
+                    var row = data[j];
+               %}
+                <tr >
+                    <!-- <td class="text-center">
+                        <span>{%= row.account_name %}</span>
+                    </td> -->
+                    {% for(let i=1, l=report_columns.length; i<l; i++) { %}
+                        {% const fieldname = report_columns[i].fieldname; %}
+                        <td class="text-center ">
+                            {% if (!is_null(row[fieldname])) { %}
+                                {%= frappe.format(row[fieldname], report_columns[i], {}, row) %}
+                            {% } else { %}
+                                {%= "  " %}
+                            {% } %}
+                        </td>
+                    {% } %}
+                </tr>
+            {% } %}
+        </tbody>
+</table>

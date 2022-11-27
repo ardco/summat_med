@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include summat_med *.css
+recursive-include summat_med *.csv
+recursive-include summat_med *.html
+recursive-include summat_med *.ico
+recursive-include summat_med *.js
+recursive-include summat_med *.json
+recursive-include summat_med *.md
+recursive-include summat_med *.png
+recursive-include summat_med *.py
+recursive-include summat_med *.svg
+recursive-include summat_med *.txt
+recursive-exclude summat_med *.pyc
